@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const useTaskStore = create(
   devtools((set) => ({
-    task: [],
+    tasks: [],
 
     AddTask: (text) => {
       const trimmedText = text.trim();
@@ -20,11 +20,18 @@ const useTaskStore = create(
 
       // mutera state
       set((state) => ({
-        task: [...state.task, newTask],
+        tasks: [newTask, ...state.tasks],
       }));
     },
 
-    toggleTask: (id) => {},
+    toggleTask: (id) => {
+      set((state) => ({
+        tasks: state.tasks.map((task) => {
+          task.id === id ? { ...task, done: !task.done } : task;
+          /* Om id matchar: du vill skapa en modifierad kopia av just den här tasken. Om id inte matchar någon stask: du vill låta den vara oförändrad.*/
+        }),
+      }));
+    },
     removeTask: (id) => {},
     clearCompleted: () => {},
   }))
