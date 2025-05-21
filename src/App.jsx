@@ -1,5 +1,9 @@
+import Header from './components/Header';
+
 export const App = () => {
   return (
-    <h1>React Boilerplate</h1>
-  )
-}
+    <>
+      <Header></Header>
+    </>
+  );
+};
