@@ -3,38 +3,48 @@ import { devtools } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
 
 const useTaskStore = create(
-  devtools((set) => ({
-    tasks: [],
+  devtools(
+    (set) => ({
+      // STATE
+      tasks: [],
 
-    AddTask: (text) => {
-      const trimmedText = text.trim();
-      if (trimmedText === '') return;
+      // ADD TASK
+      addTask: (text) => {
+        const trimmed = text.trim();
+        if (trimmed === '') return;
+        const newTask = {
+          id: uuidv4(),
+          text: trimmed,
+          done: false,
+          createdAt: new Date().toISOString(),
+        };
+        set((state) => ({
+          tasks: [newTask, ...state.tasks],
+        }));
+      },
 
-      //add a task
-      const newTask = {
-        id: uuidv4(),
-        text: trimmedText,
-        done: false,
-        createdAt: new Date().toISOString(),
-      };
+      // TOGGLE TASK
+      toggleTask: (id) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id ? { ...task, done: !task.done } : task
+          ),
+        })),
 
-      // mutera state
-      set((state) => ({
-        tasks: [newTask, ...state.tasks],
-      }));
-    },
+      // REMOVE TASK
+      removeTask: (id) =>
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== id),
+        })),
 
-    toggleTask: (id) => {
-      set((state) => ({
-        tasks: state.tasks.map((task) => {
-          task.id === id ? { ...task, done: !task.done } : task;
-          /* Om id matchar: du vill skapa en modifierad kopia av just den här tasken. Om id inte matchar någon stask: du vill låta den vara oförändrad.*/
-        }),
-      }));
-    },
-    removeTask: (id) => {},
-    clearCompleted: () => {},
-  }))
+      // CLEAR COMPLETED TASKS
+      clearCompleted: () =>
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.done === false),
+        })),
+    }),
+    { name: 'task-store' }
+  )
 );
 
 export default useTaskStore;
