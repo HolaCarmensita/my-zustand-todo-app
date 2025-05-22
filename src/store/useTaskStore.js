@@ -45,7 +45,7 @@ const useTaskStore = create(
       //SELECTORS
       selectors: {
         getTotalCount: () => get().tasks.length,
-        getPendingCount: () => get().tasks.filter((t) => !t.done).length,
+        getRemainingCount: () => get().tasks.filter((t) => !t.done).length,
         getCompletedCount: () => get().tasks.filter((t) => t.done).length,
       },
     }),
