@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export default function TaskForm() {
   const [inputText, setInputText] = useState('');
+  const [dueDate, setDueDate] = useState('');
   const addTask = useTaskStore((state) => state.actions.addTask);
 
   const handleChange = (event) => {
@@ -32,8 +33,9 @@ export default function TaskForm() {
       return;
     }
 
-    addTask(text);
+    addTask(text, dueDate);
     setInputText('');
+    setDueDate('');
   };
 
   /* 
@@ -47,6 +49,12 @@ export default function TaskForm() {
         type='text'
         placeholder='Write a task'
         onChange={handleChange}
+      />
+      <input
+        type='date'
+        value={dueDate} // en useState‐variabel, t.ex. [dueDate, setDueDate]
+        onChange={(e) => setDueDate(e.target.value)}
+        min={new Date().toISOString().split('T')[0]} // förhindra datum i det förflutna
       />
       <button type='submit'>Task</button>
     </form>

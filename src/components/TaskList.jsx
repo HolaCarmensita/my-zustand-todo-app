@@ -5,7 +5,7 @@ import EmptyState from './EmtyState';
 export default function TaskList() {
   const tasks = useTaskStore((state) => state.tasks);
 
-  if (tasks === 0) {
+  if (tasks.length === 0) {
     return (
       <EmptyState
         text={'Inga uppgifter än – lägg till din första!'}

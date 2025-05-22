@@ -11,14 +11,18 @@ const useTaskStore = create(
 
         //ACTIONS
         actions: {
-          addTask: (text) => {
+          addTask: (text, dueDate) => {
             const trimmed = text.trim();
             if (trimmed === '') return;
+
+            const dueDataObject = dueDate ? new Date(dueDate) : null;
+
             const newTask = {
               id: uuidv4(),
               text: trimmed,
               done: false,
               createdAt: new Date().toISOString(),
+              dueDate: dueDataObject,
             };
             set((state) => ({
               tasks: [newTask, ...state.tasks],
