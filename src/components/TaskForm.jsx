@@ -6,7 +6,7 @@ export default function TaskForm() {
   const addTask = useTaskStore((state) => state.actions.addTask);
 
   const handleChange = (event) => {
-    setInputText = event.target.value;
+    setInputText(event.target.value);
   };
 
   const handleSubmit = (event) => {
