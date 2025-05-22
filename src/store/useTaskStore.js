@@ -8,6 +8,7 @@ const useTaskStore = create(
       (set, get) => ({
         //STATE
         tasks: [],
+        themeMode: 'light',
 
         //ACTIONS
         actions: {
@@ -44,6 +45,11 @@ const useTaskStore = create(
           clearCompleted: () =>
             set((state) => ({
               tasks: state.tasks.filter((task) => !task.done),
+            })),
+
+          toggleTheme: () =>
+            set((state) => ({
+              themeMode: state.themeMode === 'light' ? 'dark' : 'light',
             })),
         },
 

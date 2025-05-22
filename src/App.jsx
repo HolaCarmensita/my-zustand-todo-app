@@ -1,15 +1,29 @@
 import Header from './components/Header';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
-import DateInputWithPicker from './components/DateInputWithPicker';
+import styled, { ThemeProvider } from 'styled-components';
+import useTaskStore from './store/useTaskStore';
+import { GlobalStyle, lightTheme, darkTheme } from '../styles/globalStyles';
+
+const AppContainer = styled.div`
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.text};
+  min-height: 100vh;
+  padding: 1rem;
+`;
 
 export const App = () => {
+  const themeMode = useTaskStore((s) => s.themeMode);
+  const theme = themeMode === 'light' ? lightTheme : darkTheme;
+
   return (
-    <>
-      <Header></Header>
-      <TaskForm></TaskForm>
-      <TaskList></TaskList>
-      <TaskList filterMode='today'></TaskList>
-    </>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <AppContainer>
+        <Header />
+        <TaskForm />
+        <TaskList filterMode='all' />
+      </AppContainer>
+    </ThemeProvider>
   );
 };
