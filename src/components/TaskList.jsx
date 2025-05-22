@@ -8,7 +8,7 @@ export default function TaskList({ filterMode }) {
   // 1) Prenumerera på råa tasks
   const allTasks = useTaskStore((state) => state.tasks);
 
-  // 2) Derivera filteredTasks med useMemo
+  // 2) Derivera filteredTasks med useMemo (filteredTasks är en ny array som är en avledning (derivation) av allTasks utifrån något villkor (t.ex. “endast dagens tasks”).
   const filteredTasks = useMemo(() => {
     switch (filterMode) {
       case 'today':
