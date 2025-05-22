@@ -9,6 +9,7 @@ export const App = () => {
       <Header></Header>
       <TaskForm></TaskForm>
       <TaskList></TaskList>
+      <TaskList filterMode='today'></TaskList>
     </>
   );
 };

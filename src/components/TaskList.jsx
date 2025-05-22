@@ -1,21 +1,40 @@
-import useTaskStore from '../store/useTaskStore';
+import { useMemo } from 'react';
 import TaskItem from './TaskItem';
 import EmptyState from './EmtyState';
+import { isToday, isThisWeek } from 'date-fns';
+import useTaskStore from '../store/useTaskStore';
 
-export default function TaskList() {
-  const tasks = useTaskStore((state) => state.tasks);
+export default function TaskList({ filterMode }) {
+  // 1) Prenumerera på råa tasks
+  const allTasks = useTaskStore((state) => state.tasks);
 
-  if (tasks.length === 0) {
-    return (
-      <EmptyState
-        text={'Inga uppgifter än – lägg till din första!'}
-      ></EmptyState>
-    );
+  // 2) Derivera filteredTasks med useMemo
+  const filteredTasks = useMemo(() => {
+    switch (filterMode) {
+      case 'today':
+        return allTasks.filter((task) => task.dueDate && isToday(task.dueDate));
+      case 'week':
+        return allTasks.filter(
+          (task) =>
+            task.dueDate && isThisWeek(task.dueDate, { weekStartsOn: 1 })
+        );
+      case 'remaining':
+        return allTasks.filter((task) => !task.done);
+      case 'completed':
+        return allTasks.filter((task) => task.done);
+      default: // "all"
+        return allTasks;
+    }
+  }, [allTasks, filterMode]);
+
+  // 3) Tom-lista-hantering
+  if (filteredTasks.length === 0) {
+    return <EmptyState text='Inga uppgifter att visa för valt filter' />;
   }
 
   return (
     <ul>
-      {tasks.map((task) => (
+      {filteredTasks.map((task) => (
         <TaskItem key={task.id} task={task} />
       ))}
     </ul>

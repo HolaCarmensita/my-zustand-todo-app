@@ -47,7 +47,7 @@ const useTaskStore = create(
             })),
         },
 
-        //SELECTORS
+        //SELECTORS FÖR RÄKNARE
         selectors: {
           getTotalCount: () => get().tasks.length,
           getRemainingCount: () => get().tasks.filter((t) => !t.done).length,
