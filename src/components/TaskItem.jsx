@@ -14,15 +14,13 @@ export default function TaskItem({ task }) {
 
   return (
     <li>
-      <label htmlFor={`task-${task.id}`}>
-        <input
-          id={`task-${task.id}`} //for conneting to the label
-          type='checkbox'
-          checked={task.done}
-          onChange={handleToggle}
-        ></input>
-        <span>{task.text}</span>
-      </label>
+      <input
+        id={`task-${task.id}`} //for conneting to the label
+        type='checkbox'
+        checked={task.done}
+        onChange={handleToggle}
+      ></input>
+      <label htmlFor={`task-${task.id}`}>{task.text}</label>
       <button
         type='button'
         onClick={handleRemove}

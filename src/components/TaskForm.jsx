@@ -43,20 +43,48 @@ export default function TaskForm() {
   */
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={inputText}
-        type='text'
-        placeholder='Write a task'
-        onChange={handleChange}
-      />
-      <input
-        type='date'
-        value={dueDate} // en useState‐variabel, t.ex. [dueDate, setDueDate]
-        onChange={(e) => setDueDate(e.target.value)}
-        min={new Date().toISOString().split('T')[0]} // förhindra datum i det förflutna
-      />
-      <button type='submit'>Task</button>
+    <form onSubmit={handleSubmit} style={{ padding: '20px', margin: '10px' }}>
+      <label
+        htmlFor='task-input'
+        style={{ display: 'block', marginBottom: '15px' }}
+      >
+        Task Description:
+        <input
+          id='task-input'
+          value={inputText}
+          type='text'
+          placeholder='Write a task'
+          onChange={handleChange}
+          style={{
+            padding: '12px',
+            margin: '8px 0',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        />
+      </label>
+      <label
+        htmlFor='due-date'
+        style={{ display: 'block', marginBottom: '15px' }}
+      >
+        Due Date:
+        <input
+          id='due-date'
+          type='date'
+          value={dueDate} // en useState‐variabel, t.ex. [dueDate, setDueDate]
+          onChange={(e) => setDueDate(e.target.value)}
+          min={new Date().toISOString().split('T')[0]} // förhindra datum i det förflutna
+          style={{
+            padding: '12px',
+            margin: '8px 0',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        />
+      </label>
+      <button type='submit' style={{ padding: '12px 24px', margin: '10px 0' }}>
+        Add Task
+      </button>
     </form>
   );
 }

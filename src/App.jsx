@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import TaskForm from './components/TaskForm';
-import TaskList from './components/TaskList';
+import TaskView from './components/TaskView';
 import styled, { ThemeProvider } from 'styled-components';
 import useTaskStore from './store/useTaskStore';
 import { GlobalStyle, lightTheme, darkTheme } from '../styles/globalStyles';
@@ -22,7 +22,7 @@ export const App = () => {
       <AppContainer>
         <Header />
         <TaskForm />
-        <TaskList filterMode='all' />
+        <TaskView />
       </AppContainer>
     </ThemeProvider>
   );
